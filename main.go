@@ -70,23 +70,39 @@ func keyListen(ch chan<- *keyboard.Key) {
 
 func updateScreenWithPosition(ch <-chan Face, screen Screen) {
 	updateScreen(screen)
-	horizontalRatio := int(math.Round(math.Max(float64(screen.Height), float64(screen.Width)) / math.Min(float64(screen.Height), float64(screen.Width))) / 2)
+	horizontalRatio := int(math.Round(math.Max(float64(screen.Height), float64(screen.Width)) / math.Min(float64(screen.Height), float64(screen.Width))))
 	for face := range ch {
 		switch face {
 		case Forward:
-			screen.Position.X += horizontalRatio
+			if screen.Position.X + len(screen.Sprite) + horizontalRatio > screen.Width {
+				screen.Position.X = 0
+			} else {
+				screen.Position.X += horizontalRatio
+			}
 			screen.Sprite = TIE_FWD
 			updateScreen(screen)
 		case Backward:
-			screen.Position.X -= horizontalRatio
+			if screen.Position.X - horizontalRatio < 0 {
+				screen.Position.X = screen.Width - len(screen.Sprite)
+			} else {
+				screen.Position.X -= horizontalRatio
+			}
 			screen.Sprite = TIE_BWD
 			updateScreen(screen)
 		case Up:
-			screen.Position.Y -= 1
+			if screen.Position.Y - 1 < 0 {
+				screen.Position.Y = screen.Height - 1
+			} else {
+				screen.Position.Y -= 1
+			}
 			screen.Sprite = TIE
 			updateScreen(screen)
 		case Down:
-			screen.Position.Y += 1
+			if screen.Position.Y + 1 > screen.Height {
+				screen.Position.Y = 0
+			} else {
+				screen.Position.Y += 1
+			}
 			screen.Sprite = TIE
 			updateScreen(screen)
 		case Idle:
