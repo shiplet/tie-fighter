@@ -1,4 +1,4 @@
-package main
+package tie-fighter
 
 import (
 	"bufio"
