@@ -1,4 +1,4 @@
-module tie-fighter
+module github.com/shiplet/tie-fighter
 
 go 1.15
 
