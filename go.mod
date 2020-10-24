@@ -1,4 +1,4 @@
-module main
+module tie-fighter
 
 go 1.15
 
