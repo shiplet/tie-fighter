@@ -219,7 +219,6 @@ func mainLoop(ch <-chan *keyboard.Key) {
 
 func main()  {
 	keyChan := make(chan *keyboard.Key)
-	fmt.Println("Press ESC to quit")
 	go keyWatch(keyChan)
 	go keyListen(keyChan)
 	mainLoop(keyChan)
